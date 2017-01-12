@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class NumberUtil {
 
-    static String regx = "[\\+\\-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[\\d]+)?";// 科学计数法正则表达式
-    static Pattern pattern = Pattern.compile(regx);
+    final static String regx = "[\\+\\-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[\\d]+)?";// 科学计数法正则表达式
+    final static Pattern pattern = Pattern.compile(regx);
 
     /**
      * 判断这个数字是不是科学计数法表示的数字。
