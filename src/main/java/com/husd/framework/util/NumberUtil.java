@@ -1,5 +1,7 @@
 package com.husd.framework.util;
 
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,5 +22,25 @@ public class NumberUtil {
             return false;
         }
         return pattern.matcher(num).matches();
+    }
+
+    /**
+     * 计算百分比 保留2位小数
+     * 
+     * @param divisor 分子
+     * @param total 分母
+     * @return
+     */
+    public static String calcPercent(double divisor, double total) {
+        if (total <= 0.0) {
+            return "0.00%";
+        }
+        if (divisor < 0.0) {
+            divisor = -divisor;
+        }
+        double tempResult = divisor / total;
+        Format df = new DecimalFormat("0.00%");
+        String result = df.format(tempResult);
+        return result;
     }
 }
