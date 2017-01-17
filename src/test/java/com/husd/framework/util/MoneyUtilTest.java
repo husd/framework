@@ -12,12 +12,15 @@ public class MoneyUtilTest extends TestCase {
         String expected = "￥3.00";
         Assert.assertEquals("测试正常", expected, actual);
 
-
         num = 3.12;
         actual = MoneyUtil.transfer2RMB(num);
         expected = "￥3.12";
         Assert.assertEquals("测试正常", expected, actual);
 
+        num = 3;
+        actual = MoneyUtil.transfer2RMB(num);
+        expected = "￥3.00";
+        Assert.assertEquals("测试整数", expected, actual);
 
         num = -3.12;
         actual = MoneyUtil.transfer2RMB(num);
