@@ -1,4 +1,4 @@
-package com.husd.framework.model;
+package com.husd.framework.constant;
 
 import java.util.concurrent.TimeUnit;
 

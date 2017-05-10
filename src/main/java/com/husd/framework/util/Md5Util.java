@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.husd.framework.model.EncodeEnum;
+import com.husd.framework.enu.EncodeEnum;
 
 public class Md5Util {
 

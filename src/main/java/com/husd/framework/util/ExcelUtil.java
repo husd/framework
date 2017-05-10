@@ -40,7 +40,8 @@ public class ExcelUtil {
      * @return
      */
     public static boolean createExcel2003(List<Object[]> data, File targetFile) {
-        // 不设置必填项（必填项会增加红色） ，不设置列的宽度
+        // 不设置必填项（必填项会增加红色） ，不设置列toPage的宽度
+
         return createExcel2003(data, targetFile, null, 10, -1, -1);
     }
 
