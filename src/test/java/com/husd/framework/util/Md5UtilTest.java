@@ -1,18 +1,11 @@
 package com.husd.framework.util;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class Md5UtilTest extends TestCase {
+public class Md5UtilTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testEncode() {
         String a = "123";
         String actual = Md5Util.encode(a);

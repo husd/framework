@@ -1,11 +1,11 @@
 package com.husd.framework.util;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class MoneyUtilTest extends TestCase {
+public class MoneyUtilTest {
 
-
+    @Test
     public void testTransfer2RMB() {
         double num = 3;
         String actual = MoneyUtil.transferDouble2RMB(num);

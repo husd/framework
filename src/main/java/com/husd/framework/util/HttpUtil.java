@@ -1,13 +1,10 @@
 package com.husd.framework.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 
-import com.husd.framework.enu.EncodeEnum;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by hushengdong on 16/9/5.
@@ -26,7 +23,7 @@ public class HttpUtil {
 
     public static String encodeURL(String url) {
         try {
-            url = URLEncoder.encode(url, EncodeEnum.UTF8.getName());
+            url = URLEncoder.encode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             // ignore
         }

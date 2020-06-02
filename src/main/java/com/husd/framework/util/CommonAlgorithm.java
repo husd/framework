@@ -72,7 +72,7 @@ public class CommonAlgorithm {
 
     private static double findRadioAndChangeWeight(int[] inventoryArr, double[] weight) {
         for (int i = 0; i < weight.length; i++) {
-            if(weight[i] != 0 && inventoryArr[i] != 0) {
+            if (weight[i] != 0 && inventoryArr[i] != 0) {
 
             }
         }

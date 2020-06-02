@@ -6,8 +6,6 @@ import java.security.MessageDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.husd.framework.enu.EncodeEnum;
-
 public class Md5Util {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(Md5Util.class);
@@ -16,7 +14,7 @@ public class Md5Util {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
-            md.update(str.getBytes(EncodeEnum.UTF8.getName()));
+            md.update(str.getBytes("UTF-8"));
         } catch (Exception e) {
             // ignore this
             LOGGER.error("[md5] encode error, str is {}", str);

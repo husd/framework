@@ -1,97 +1,72 @@
 package com.husd.framework.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import com.google.common.collect.Lists;
+import com.husd.framework.excel.ExcelCommonBean;
+import com.husd.framework.excel.ExcelUtility;
+
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
-import javax.mail.internet.MimeUtility;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-
+/**
+ * @author hushengdong
+ * @date 2020/6/2
+ */
 public class FileUtil {
 
-    public static void download(HttpServletRequest request, HttpServletResponse response,
-            String filePath, String realName) {
-        File file = new File(filePath);
-        download(request, response, file);
+    /**
+     * 把字符串写入到文件内容中去
+     *
+     * @param content
+     * @param name
+     * @throws IOException
+     */
+    public static void writeNIO(String content, String name) throws IOException {
+        FileOutputStream fos = new FileOutputStream(name, true);
+        FileChannel channel = fos.getChannel();
+        ByteBuffer buf = ByteBuffer.wrap(content.getBytes());
+        buf.put(content.getBytes());
+        buf.flip();
+        channel.write(buf);
+        channel.close();
+        fos.close();
     }
 
-    public static void download(HttpServletRequest request, HttpServletResponse response,
-            File file) {
+    public List<String> readFrom(String path) {
 
-        BufferedInputStream bis = null;
-        BufferedOutputStream bos = null;
+        String fileName = this.getClass().getClassLoader().getResource(path).getPath();
         try {
-            request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=UTF-8");
-            response.setContentType("application/octet-stream");
-            String userAgent = request.getHeader("User-Agent");
-
-            String filePath = file.getAbsolutePath();
-            String fileName = filePath.substring(filePath.lastIndexOf(File.separator) + 1);
-            String rtn = encodeByBrowseType(userAgent, fileName);
-            response.setHeader("Content-disposition", "attachment; " + rtn);
-            response.setHeader("Content-Length", String.valueOf(file.length()));
-
-            bis = new BufferedInputStream(new FileInputStream(file));
-            bos = new BufferedOutputStream(response.getOutputStream());
-            byte[] buff = new byte[2048];
-            int bytesRead;
-            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-                bos.write(buff, 0, bytesRead);
-            }
-        } catch (Exception e) {
-            // ignore this exception
-        } finally {
-            try {
-                bis.close();
-            } catch (IOException e1) {
-            }
-            try {
-                bos.close();
-            } catch (IOException e1) {
-            }
-            file.delete();
+            List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+            return lines;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return Lists.newArrayList();
     }
 
-    private static String encodeByBrowseType(String userAgent, String fileName)
-            throws UnsupportedEncodingException {
+    public List<ExcelCommonBean> readExcelFrom(String path) {
 
-        String newName = URLEncoder.encode(fileName, "UTF-8");
-        // 默认按IE的方式来编码
-        if (StringUtils.isBlank(userAgent)) {
-            return "filename=\"" + newName + "\"";
+        String fileName = this.getClass().getClassLoader().getResource(path).getPath();
+        String[] properties = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        try {
+            ExcelUtility<ExcelCommonBean> utility = ExcelUtility
+                    .newImportBuilder(new File(fileName), ExcelCommonBean.class, properties)
+                    .maxUploadSum(1000)
+                    .build();
+            return utility.readExcel();
+        } catch (Exception e) {
         }
-        String rtn = "";
-        userAgent = userAgent.toLowerCase();
-        // IE浏览器
-        if (userAgent.indexOf("msie") != -1) {
-            rtn = "filename=\"" + newName + "\"";
-        }
-        // Opera浏览器只能采用filename*
-        else if (userAgent.indexOf("opera") != -1) {
-            rtn = "filename*=UTF-8''" + newName;
-        }
-        // Safari浏览器，只能采用ISO编码的中文输出
-        else if (userAgent.indexOf("safari") != -1) {
-            rtn = "filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO8859-1") + "\"";
-        }
-        // Chrome浏览器，只能采用MimeUtility编码或ISO编码的中文输出
-        else if (userAgent.indexOf("applewebkit") != -1) {
-            newName = MimeUtility.encodeText(fileName, "UTF8", "B");
-            rtn = "filename=\"" + newName + "\"";
-        }
-        // FireFox浏览器，可以使用MimeUtility或filename*或ISO编码的中文输出
-        else if (userAgent.indexOf("mozilla") != -1) {
-            rtn = "filename*=UTF-8''" + newName;
-        }
-        return rtn;
+        return Lists.newArrayList();
+    }
+
+    public static boolean isExists(File file) {
+
+        return file != null && file.exists();
     }
 }

@@ -1,4 +1,4 @@
-package com.husd.framework;
+package com.husd.framework.memory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
