@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <p> {{ message }} </p>
+    <p> {{ reversedMsg }}</p>
+    <p><button v-on:click="reverseMessage">反转消息(v-on:click)</button></p>
+    <p><button @click="reverseMessage">反转消息(@click)</button></p>
+    <input v-model="message">
+    <div v-bind:title="msg2">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </div>
+
+    <p> 变量是支持javascript表达式的，可以做运算和执行函数 num is {{num1}} ,num+1 is : {{ num1 + 1 }},
+        seen的值是 {{ seen ? "true" : "false" }}</p>
+
+    <p v-once>这个将不会改变: {{ message }} 因为使用了v-once </p>
+
+    <p>这里示范普通字符串和把字符串解析为html的用法</p>
+    <p>使用普通字符串绑定: <span> {{ msg3 }}</span></p>
+    <p>使用v-html显示<span style="color:red">(危险操作，有可能有XSS漏洞)</span>: <span v-html="msg3"></span></p>
+
+    <p v-if="seen">现在你看到我了 示范了 v-if 的用法 </p>
+    <p v-else-if="seen2">现在你看到我了 示范了 v-else-if 的用法 </p>
+    <p v-else>现在你看到我了 示范了 v-else 的用法 </p>
+
+    <div v-bind:id="id1"></div>
+    <button :disabled="seen">禁用按钮(v-bind提供了缩写 v-bind:disables 等价于 :disables)</button>
+    <button :disabled="!seen">不禁用按钮</button>
+
+    <p>.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：</p>
+    <button v-on:submit.prevent="onSubmit">点击触发 event.preventDefault()</button>
+
+    <p>这里是普通的有序列表</p>
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ol>
+
+    <p>这个是利用控件的方式做的for循环</p>
+    <ol>
+        <!--
+          现在我们为每个 todo-item 提供 todo 对象
+          todo 对象是变量，即其内容可以是动态的。
+          我们也需要为每个组件提供一个“key”，稍后再
+          作详细解释。
+        -->
+        <todo-item
+                v-for="item in todos"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+        ></todo-item>
+    </ol>
+
+    <div>
+        在控制台里，输入 app4.todos.push({ text: '新项目' })，你会发现列表最后添加了一个新项目。
+    </div>
+
+    <div>在 Vue 里，一个组件本质上是一个拥有预定义选项的一个 Vue 实例。在 Vue 中注册组件很简单：</div>
+
+    <p>下面是复选框的例子</p>
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <br>
+    <span>Checked names: {{ checkedNames }}</span>
+
+    <p>下面是单选框的例子</p>
+    <div id="example-4">
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+    </div>
+
+    <p>下面是下拉框的例子</p>
+    <div id="example-5">
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+    </div>
+
+    <p>下面是多选框的例子</p>
+    <div id="example-6">
+        <select v-model="selected2" multiple style="width: 50px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <br>
+        <span>Selected: {{ selected2 }}</span>
+    </div>
+
+    <select v-model="selected3">
+        <option v-for="option in options" :value="option.value">
+            {{ option.text }}
+        </option>
+    </select>
+    <span>Selected: {{ selected3 }}</span>
+</div>
+
+<script src="vue.dev.js"></script>
+
+<script type="text/javascript">
+
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+});
+
+var final_obj = {
+  foo: '这个是不能变的变量'
+}
+
+Object.freeze(final_obj)
+
+  var app = new Vue({
+  el: '#app',
+  data: {
+    id1: 'this is id',
+    message: 'Hello Vue! 12345 ',
+    num1 : 10,
+    msg2: '页面加载于 ' + new Date().toLocaleString(),
+    msg3 : '<span style="color:blue"> 我的字体是蓝色的 </span>',
+    seen : true,
+    seen2 : true,
+    todos : [
+      { text: '学习 JavaScript' },
+      { text: '学习 Vue' },
+      { text: '整个牛项目' },
+      { text: final_obj.foo}
+    ],
+    firstName: 'Foo',
+    lastName: 'Bar',
+    checkedNames:[],
+    picked:[],
+    selected:'',
+    selected2:[],
+    options: [
+      { text: 'One', value: 'A' },
+      { text: 'Two', value: 'B' },
+      { text: 'Three', value: 'C' }
+    ],
+    selected3:''
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+    }
+  },
+  created: function () {
+    console.log('msg is: ' + this.message)
+  },
+  computed: {
+    // 计算属性的 getter 相对于普通方法来说，计算属性是有缓存的
+    reversedMsg: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    },
+    fullName: function() {
+       return this.firstName + ' ' + this.lastName
+    }
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+});
+
+</script>
+</body>
+</html>
