@@ -11,6 +11,8 @@ public class SomeTest {
     @Test
     public void test() {
 
-
+        String a = "ab";
+        String b = "a" + "b";
+        System.out.println(a == b);
     }
 }
