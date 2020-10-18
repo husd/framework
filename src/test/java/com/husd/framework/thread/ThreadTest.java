@@ -15,6 +15,7 @@ import org.junit.Test;
  *
  * @author hushengdong
  * @date 2019/11/19
+ * @tag 多线程
  */
 public class ThreadTest {
 
