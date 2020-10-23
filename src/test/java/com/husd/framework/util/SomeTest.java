@@ -2,17 +2,14 @@ package com.husd.framework.util;
 
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 public class SomeTest {
 
     @Test
     public void test() {
 
-        String a = "ab";
-        String b = "a" + "b";
-        System.out.println(a == b);
+        int a = 10;
+        int b = a + --a;
+        // 这段代码测试运算符的优先级，jdk 1.8 b = 19
+        System.out.println("b is :" + b);
     }
 }
