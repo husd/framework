@@ -1,7 +1,7 @@
 package com.husd.framework.excel;
 
-import com.husd.framework.util.CollectionUtils;
-import com.husd.framework.util.DateUtils;
+import com.husd.framework.util.CollectionUtil;
+import com.husd.framework.util.DateUtil;
 import com.husd.framework.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -386,7 +386,7 @@ public final class ExcelUtility<T> {
         }
 
         // 直接返回原文件
-        if (CollectionUtils.isEmpty(columnContentsList)) {
+        if (CollectionUtil.isEmpty(columnContentsList)) {
             return new File(fullPathName);
         }
         Workbook wb = null;
@@ -689,7 +689,7 @@ public final class ExcelUtility<T> {
     private void setCellValue(Cell cell, Object val) {
 
         if (val instanceof Date) {
-            cell.setCellValue(DateUtils.date2String((Date) val, DateUtils.FORMAT_1));
+            cell.setCellValue(DateUtil.date2String((Date) val, DateUtil.FORMAT_1));
         } else {
             if (val == null) {
                 cell.setCellValue(StringUtils.EMPTY);
@@ -878,7 +878,7 @@ public final class ExcelUtility<T> {
             if (format == 14 || format == 31 || format == 57
                     || format == 58 || format == 20 || format == 32) {
                 Date date = cell.getDateCellValue();
-                cellValue = DateUtils.date2String(date, DateUtils.FORMAT_1);
+                cellValue = DateUtil.date2String(date, DateUtil.FORMAT_1);
             }
         }
         return cellValue.trim();
@@ -930,7 +930,7 @@ public final class ExcelUtility<T> {
     private String getAppendFileFullName(String bizTag, String fileSuffix) {
 
         return fullPathName.substring(0, fullPathName.lastIndexOf('\\') + 1) + bizTag + "_"
-                + DateUtils.date2String(new Date()) + fileSuffix;
+                + DateUtil.date2String(new Date()) + fileSuffix;
     }
 
     public Excel getVersion() {

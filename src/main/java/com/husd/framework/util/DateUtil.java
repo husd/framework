@@ -2,10 +2,13 @@ package com.husd.framework.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class DateUtils {
+public class DateUtil {
 
     // 格式：年－月－日 小时：分钟：秒
     public static final String FORMAT_1 = "yyyy-MM-dd HH:mm:ss";
@@ -31,6 +34,26 @@ public class DateUtils {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    /**
+     * 这个方法返回2个日期之间的所有日期 包含start和end
+     *
+     * @param start 开始日期 2020-10-10
+     * @param end   结束日期 2020-10-11
+     * @return
+     */
+    public List<String> getDateBetween(String start, String end) {
+
+        List<String> dateList = new ArrayList<>();
+
+        LocalDate startLocalDate = LocalDate.parse(start);
+        LocalDate endLocalDate = LocalDate.parse(end);
+        while (startLocalDate.isBefore(endLocalDate) || startLocalDate.isEqual(endLocalDate)) {
+            dateList.add(startLocalDate.toString());
+            startLocalDate = startLocalDate.plusDays(1L);
+        }
+        return dateList;
     }
 
 }
