@@ -3,6 +3,7 @@
  */
 package com.husd.framework.util;
 
+import com.husd.framework.BaseTest;
 import com.husd.framework.TestHelper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,9 +13,8 @@ import java.util.List;
 
 /**
  * @author hushengdong
- *
  */
-public class NumberUtilTest {
+public class NumberUtilTest extends BaseTest {
 
     /**
      * Test method for {@link com.husd.framework.util.NumberUtil#isENum(java.lang.String)}.
@@ -94,6 +94,20 @@ public class NumberUtilTest {
         System.out.println(bigDecimal.toString());
         Integer a1 = Integer.parseInt("+1");
         System.out.println(a1);
+    }
+
+    @Test
+    public void isNumber() {
+
+        List<String> validNumList = loadResource("number.lst");
+        for (String s : validNumList) {
+            Assert.assertEquals(s, true, NumberUtil.isNumber(s));
+        }
+
+        List<String> invalidNumList = loadResource("non_number.lst");
+        for (String s : invalidNumList) {
+            Assert.assertEquals(s, false, NumberUtil.isNumber(s));
+        }
     }
 
 }
