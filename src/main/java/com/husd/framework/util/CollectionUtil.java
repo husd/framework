@@ -8,7 +8,7 @@ import java.util.Collection;
  * @author hushengdong
  * @date 2020/6/2
  */
-public class CollectionUtils {
+public class CollectionUtil {
 
     public static boolean isEmpty(Collection collection) {
 

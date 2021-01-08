@@ -49,6 +49,7 @@ public class NumberUtil {
         if (StringUtils.isBlank(num)) {
             return false;
         }
+        num = num.trim();
         final int sz = num.length();
         int pointCount = 0;
         int eCount = 0;
