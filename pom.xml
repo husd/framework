@@ -11,6 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons-email-version>1.2</commons-email-version>
 		<spring.version>3.2.16.RELEASE</spring.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -166,5 +168,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		
 	</build>
 </project>
