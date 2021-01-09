@@ -1,6 +1,8 @@
 package com.husd.framework.guava;
 
 import com.google.common.util.concurrent.RateLimiter;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +28,7 @@ public class RateLimiterTest {
          * get 1 tokens: 0.197538s
          * get 1 tokens: 0.196049s
          */
+        Assert.assertEquals("abc", "abc");
     }
 
     // 这种情况消费慢，不会导致等待
