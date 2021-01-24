@@ -6,4 +6,5 @@ package com.husd.framework.refect;
 public interface StudentMapper {
 
     public Student getStudentById(Integer id);
+
 }
