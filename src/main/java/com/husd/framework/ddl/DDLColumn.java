@@ -3,7 +3,6 @@ package com.husd.framework.ddl;
 import com.google.common.base.CaseFormat;
 
 public class DDLColumn {
-
     /**
      * 列名字
      */
@@ -12,12 +11,42 @@ public class DDLColumn {
      * 驼峰名字
      */
     private String columnNameLowerCamel;
+    /**
+     * 列类型
+     */
     private String columnType;
+    /**
+     * 是否是主键ID
+     */
     private boolean id = false;
     /**
      * 注释
      */
     private String comment;
+    /**
+     * 默认值
+     */
+    private String defaultVal;
+    /**
+     * 是否是not null
+     */
+    private boolean notNull;
+
+    public String getDefaultVal() {
+        return defaultVal;
+    }
+
+    public void setDefaultVal(String defaultVal) {
+        this.defaultVal = defaultVal;
+    }
+
+    public boolean isNotNull() {
+        return notNull;
+    }
+
+    public void setNotNull(boolean notNull) {
+        this.notNull = notNull;
+    }
 
     public String getColumnNameLowerCamel() {
         return columnNameLowerCamel;

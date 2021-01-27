@@ -66,12 +66,15 @@ public class DDLParser {
                             err(s);
                         }
                     } else if(keyStep == KeyStep.create_col) {
-                        if(pre == TokenType.COMMENT) {
+                        if (pre == TokenType.COMMENT) {
                             current = TokenType.COMMENT_VAL;
                             ddlColumn.setComment(s);
+                        } else if (pre == TokenType.DEFAULT) {
+                            current = TokenType.DEFAULT_VAL;
+                            ddlColumn.setDefaultVal(s);
                         } else {
-                            TokenType nextToken = TokenType.getTokenTypeName(array,i + 1);
-                            if(nextToken == TokenType.COLUMN_TYPE) {
+                            TokenType nextToken = TokenType.getTokenTypeName(array, i + 1);
+                            if (nextToken == TokenType.COLUMN_TYPE) {
                                 current = TokenType.COL_NAME;
                                 ddlColumn.setColumnName(s);
                             }
@@ -123,20 +126,23 @@ public class DDLParser {
                     ddlColumn.setColumnType(s);
                     break;
                 case NULL:
-                    if(pre != TokenType.COLUMN_TYPE) {
+                    if (pre != TokenType.COLUMN_TYPE) {
                         err(s);
                     }
                     break;
                 case NOT_NULL:
-                    if(pre != TokenType.COLUMN_TYPE) {
+                    if (pre != TokenType.COLUMN_TYPE) {
                         err(s);
                     }
+                    ddlColumn.setNotNull(true);
+                    break;
+                case DEFAULT:
                     break;
                 case COMMENT:
-                    if(keyStep == KeyStep.create_col) {
-                       //
+                    if (keyStep == KeyStep.create_col) {
+                        //
                     }
-                    if(keyStep == KeyStep.table_opt) {
+                    if (keyStep == KeyStep.table_opt) {
                         //
                     }
                     break;

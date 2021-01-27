@@ -17,7 +17,11 @@ public class MybatisCodeGenerator {
 
         try {
             System.out.println("....................开始解析DDL....................");
+            String osName = System.getProperty("os.name");
             String src = "D:\\git-source\\framework\\src\\main\\java\\com\\husd\\framework\\ddl\\src_ddl.sql";
+            if (osName.contains("Mac")) {
+                src = "/Users/hushengdong/hushengdong/github-source/framework/src/main/java/com/husd/framework/ddl/src_ddl.sql";
+            }
             MybatisCodeGenerator mybatisCodeGenerator = new MybatisCodeGenerator();
             String sql = mybatisCodeGenerator.readDDLFromFile(src);
             DDL ddl = DDLParser.parseDDL(sql);
@@ -33,6 +37,7 @@ public class MybatisCodeGenerator {
 
     private static void createMybatisXML(DDL ddl) {
 
+        MybatisJavaAutoUtil.createXml(ddl);
     }
 
     private static void createMybatisJava(DDL ddl) {

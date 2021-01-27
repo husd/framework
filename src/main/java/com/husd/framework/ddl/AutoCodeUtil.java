@@ -1,32 +1,34 @@
 package com.husd.framework.ddl;
 
+import com.google.common.base.CaseFormat;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class AutoCodeUtil {
 
-    public static Map<String,String> col2JavaTypeMap = new HashMap<>();
+    public static Map<String, String> col2JavaTypeMap = new HashMap<>();
 
-    public static String [] cols = {"bit","tinyint","smallint","mediumint","int",
-            "bigint","float","double","decimal","date","datetime",
-            "timestamp","time","year","char","varchar","binary","varbinary",
-            "tiny text","text","medium text","long text","tinyblob","blob","mediumblob",
-            "longblob","enum","set","geometry","point","linestring","polygon","multipoint",
-            "multilinestring","multipolygon","geometrycollection"
+    public static String[] cols = {"bit", "tinyint", "smallint", "mediumint", "int",
+            "bigint", "float", "double", "decimal", "date", "datetime",
+            "timestamp", "time", "year", "char", "varchar", "binary", "varbinary",
+            "tiny text", "text", "medium text", "long text", "tinyblob", "blob", "mediumblob",
+            "longblob", "enum", "set", "geometry", "point", "linestring", "polygon", "multipoint",
+            "multilinestring", "multipolygon", "geometrycollection"
     };
 
     //一些不识别的类型，直接用原来的类型，直接报错就行了。
-    public static String [] cols_java = {"Integer","Short","Short","Short","Integer",
-            "Long","Float","Double","BigDecimal","Date","Date",
-            "Date","Date","String","Char","String","binary","varbinary",
-            "String","String","String","String","tinyblob","blob","mediumblob",
-            "longblob","enum","set","geometry","point","linestring","polygon","multipoint",
-            "multilinestring","multipolygon","geometrycollection"
+    public static String[] cols_java = {"Integer", "Short", "Short", "Short", "Integer",
+            "Long", "Float", "Double", "BigDecimal", "Date", "Date",
+            "Date", "Date", "String", "Char", "String", "binary", "varbinary",
+            "String", "String", "String", "String", "tinyblob", "blob", "mediumblob",
+            "longblob", "enum", "set", "geometry", "point", "linestring", "polygon", "multipoint",
+            "multilinestring", "multipolygon", "geometrycollection"
     };
 
     static {
-        for(int i = 0;i < cols.length;i++) {
-            col2JavaTypeMap.put(cols[i],cols_java[i]);
+        for (int i = 0; i < cols.length; i++) {
+            col2JavaTypeMap.put(cols[i], cols_java[i]);
         }
     }
 
@@ -34,7 +36,19 @@ public class AutoCodeUtil {
 
     public static String getJavaType(String col) {
 
-        return col2JavaTypeMap.getOrDefault(col,col);
+        return col2JavaTypeMap.getOrDefault(col, col);
+    }
+
+    public static String getCamelName(String name) {
+
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name);
+    }
+
+    public static String firstUpper(String str) {
+
+        char[] arr = str.toCharArray();
+        arr[0] = Character.toUpperCase(arr[0]);
+        return String.valueOf(arr);
     }
 
 }
