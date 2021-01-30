@@ -1,0 +1,6 @@
+package @@package_name@@;
+
+public interface @@class_name@@Dao {
+
+    public @@class_name@@ insert@@class_name@@(@@class_name@@ @@dto_name@@);
+}

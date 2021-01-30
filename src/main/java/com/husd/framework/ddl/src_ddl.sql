@@ -1,12 +1,30 @@
-create table price_tag_elec_bind_log
+create table price_tag_elec
 (
-   log_id               bigint not null auto_increment comment '日志ID',
+   id                   bigint not null auto_increment comment 'ID',
    sales_shop           varchar(4) not null comment '销售门店',
    sku_id               int not null comment '商品SKUID',
    sales_org            varchar(4) comment '销售组织',
-   is_cancel            smallint not null default 0 comment '是取消',
-   log_time             varchar(19) not null comment '日志时间',
-   trans_id             varchar(32) not null comment '事务ID',
+   std_price            int not null default 0 comment '标牌价',
+   std_price_seq        varchar(64) not null comment '标牌价流水号',
+   std_price_change_time varchar(19) not null comment '标准价变价时间',
+   shop_price           int not null default 0 comment '门店价',
+   shop_price_seq       varchar(64) not null comment '门店价流水号',
+   shop_price_type      varchar(4) not null comment '门店价格类型',
+   shop_price_change_time varchar(19) not null comment '门店价变价时间',
+   promo_price_begin_time varchar(19) comment '活动价开始时间',
+   promo_price_end_time varchar(19) comment '活动价结束时间',
+   price_controller     varchar(16) comment '物价员',
+   sku_name             varchar(255) not null comment '商品名称',
+   sku_sales_point      varchar(255) comment '商品卖点',
+   sku_spec             varchar(100) comment '商品规格',
+   sku_grade            varchar(20) comment '商品等级',
+   sku_size             varchar(120) comment '商品尺寸',
+   sku_made_in          varchar(20) comment '商品产地',
+   sku_unit             varchar(10) comment '计量单位',
+   qr_code_url          varchar(255) comment '二维码URL',
+   extended_warranty    varchar(255) comment '延保信息',
+   promo_info           varchar(255) comment '促销信息',
+   instalment_info      varchar(255) comment '分期付款信息',
    last_update_time     datetime(3) not null comment '最后更新时间',
-   primary key (log_id)
+   primary key (id)
 );

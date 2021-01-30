@@ -1,5 +1,7 @@
 package com.husd.framework.ddl;
 
+import com.husd.framework.code.DDLColumn;
+
 /**
  * 生成Java代码的
  */

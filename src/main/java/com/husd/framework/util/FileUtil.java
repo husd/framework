@@ -3,12 +3,14 @@ package com.husd.framework.util;
 import com.google.common.collect.Lists;
 import com.husd.framework.excel.ExcelCommonBean;
 import com.husd.framework.excel.ExcelUtility;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -17,6 +19,8 @@ import java.util.List;
  * @date 2020/6/2
  */
 public class FileUtil {
+
+    private static final String LINE_SEP = System.getProperty("line.separator");
 
     /**
      * 把字符串写入到文件内容中去
@@ -34,6 +38,15 @@ public class FileUtil {
         channel.write(buf);
         channel.close();
         fos.close();
+        buf.clear();
+    }
+
+    public static void write2File(String content, String name) throws IOException {
+
+        File f = new File(name);
+        OutputStream out = new FileOutputStream(f);
+        IOUtils.write(content, out);
+        out.close();
     }
 
     public List<String> readFrom(String path) {
@@ -46,6 +59,22 @@ public class FileUtil {
             e.printStackTrace();
         }
         return Lists.newArrayList();
+    }
+
+    public String readStrFrom(String path) {
+
+        StringBuilder sb = new StringBuilder();
+        try {
+            Path p = Paths.get(path);
+            List<String> lines = Files.readAllLines(p, StandardCharsets.UTF_8);
+            for (String s : lines) {
+                sb.append(s).append(LINE_SEP);
+            }
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public List<ExcelCommonBean> readExcelFrom(String path) {

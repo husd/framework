@@ -1,5 +1,6 @@
 package com.husd.framework.ddl;
 
+import com.husd.framework.code.DDLColumn;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;

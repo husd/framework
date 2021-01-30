@@ -1,6 +1,7 @@
-package com.husd.framework.ddl;
+package com.husd.framework.code;
 
 import com.google.common.base.CaseFormat;
+import com.husd.framework.ddl.AutoCodeUtil;
 
 public class DDLColumn {
     /**
@@ -32,6 +33,21 @@ public class DDLColumn {
      */
     private boolean notNull;
 
+    public String getAttributeName() {
+
+        return this.columnName;
+    }
+
+    public String getAttributeType() {
+
+        return this.columnType;
+    }
+
+    public String getAttributeComment() {
+
+        return this.comment;
+    }
+
     public String getDefaultVal() {
         return defaultVal;
     }
@@ -62,7 +78,7 @@ public class DDLColumn {
 
     public void setComment(String comment) {
 
-        this.comment = comment.replaceAll("'","");
+        this.comment = comment.replaceAll("'", "");
     }
 
     public String getColumnName() {
@@ -78,10 +94,15 @@ public class DDLColumn {
         return columnType;
     }
 
+    public String getColumnType4Java() {
+
+        return AutoCodeUtil.getJavaType(columnType);
+    }
+
     public void setColumnType(String columnType) {
         // 如果包含左括号，就处理下
-        if(columnType.contains("(")) {
-            columnType = columnType.substring(0,columnType.indexOf("("));
+        if (columnType.contains("(")) {
+            columnType = columnType.substring(0, columnType.indexOf("("));
         }
         this.columnType = columnType;
     }
@@ -103,5 +124,10 @@ public class DDLColumn {
         sb.append(", comment='").append(comment).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public String getAttributeNameFirstUpper() {
+
+        return JavaAutoCodeUtil.firstCharUpper(getAttributeName());
     }
 }
