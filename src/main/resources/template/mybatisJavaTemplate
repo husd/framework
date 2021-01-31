@@ -1,6 +1,13 @@
 package @@package_name@@;
 
-public interface @@class_name@@Dao {
+import java.util.Date;
+import @@full_class_name@@;
+import org.apache.ibatis.annotations.Param;
 
-    public @@class_name@@ insert@@class_name@@(@@class_name@@ @@dto_name@@);
+/**
+ * @@model_comment@@
+ */
+public interface @@mybatis_java_class_name@@ {
+
+    public @@class_name@@ insert@@class_name@@(@Param("tblName") String tblName, @Param("item") @@class_name@@ @@dto_name@@);
 }

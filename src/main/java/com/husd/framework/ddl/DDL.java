@@ -7,8 +7,17 @@ import java.util.List;
 
 public class DDL {
 
+    /**
+     * 表的英文名字
+     */
     private String tableName;
+    /**
+     * 表的中文名字
+     */
     private String tableComment;
+    /**
+     * 表的列
+     */
     private List<DDLColumn> columnList;
 
     public String getTableComment() {
@@ -25,7 +34,7 @@ public class DDL {
 
     public void setTableName(String tableName) {
 
-        if(StringUtils.isNotBlank(this.tableName)) {
+        if (StringUtils.isNotBlank(this.tableName)) {
             throw new RuntimeException("table name已经设置过了 current:" + this.tableName + " new:" + tableName);
         }
         this.tableName = tableName;

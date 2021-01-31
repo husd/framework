@@ -1,12 +1,7 @@
 package com.husd.framework.code.impl;
 
-import com.husd.framework.code.DDLColumn;
-import com.husd.framework.code.JavaAutoCode;
-import com.husd.framework.code.JavaAutoCodeUtil;
-import com.husd.framework.code.JavaFile;
-import com.husd.framework.ddl.AutoCodeUtil;
+import com.husd.framework.code.*;
 import com.husd.framework.util.FileUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -20,42 +15,28 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
     @Override
     public StringBuilder generateDto(JavaFile javaFile) {
 
+        JavaClassService javaClassService = new JavaClassServiceImpl();
         StringBuilder sb = new StringBuilder();
-        if (StringUtils.isNoneBlank(javaFile.getPackageName())) {
-            sb.append("package ").append(javaFile.getPackageName()).append(";").append(LINE_SEP);
-        }
-        for (String s : javaFile.getImportList()) {
-            sb.append(s).append(LINE_SEP);
-        }
-        sb.append("public ").append(javaFile.getType().getName()).append(" ").append(javaFile.getJavaTypeName());
-        sb.append("{ ").append(LINE_SEP);
+        //package
+        javaClassService.addPackage(sb, javaFile.getPackageName());
+        //import
+        javaClassService.addImport(sb, javaFile.getImportList());
+        //注释
+        javaClassService.addComment(sb, javaFile.getModelComment());
+        //类开始
+        javaClassService.addClass0(sb, javaFile.getType(), javaFile.getJavaTypeName());
         //写入属性值
         for (DDLColumn item : javaFile.getAttributeList()) {
-            sb.append("    /** ").append(LINE_SEP);
-            sb.append("     * ").append(item.getAttributeComment()).append(LINE_SEP);
-            sb.append("     */").append(LINE_SEP);
-            sb.append("     private ").append(item.getColumnType4Java()).append(" ").append(item.getColumnNameLowerCamel()).append(";").append(LINE_SEP);
+            javaClassService.addComment(sb, item.getAttributeComment());
+            javaClassService.addAttribute(sb, JavaScopeEnum._private,
+                    item.getColumnType4Java(), item.getColumnNameLowerCamel());
         }
-
-        //写入set get方法
-        String t1 = "    public void set%s(%s %s) {";
-        String t2 = "        this.%s = %s ;";
-
-        String t3 = "    public %s get%s() {";
-        String t4 = "        return %s;";
-
         for (DDLColumn item : javaFile.getAttributeList()) {
-            sb.append(String.format(t1, AutoCodeUtil.firstUpper(item.getColumnNameLowerCamel()), item.getColumnType4Java(), item.getColumnNameLowerCamel()));
-            sb.append(LINE_SEP);
-            sb.append(String.format(t2, item.getColumnNameLowerCamel(), AutoCodeUtil.firstUpper(item.getColumnNameLowerCamel()))).append(LINE_SEP);
-            sb.append("   }").append(LINE_SEP);
-
-            sb.append(String.format(t3, item.getColumnType4Java(), AutoCodeUtil.firstUpper(item.getColumnNameLowerCamel()))).append(LINE_SEP);
-            sb.append(String.format(t4, item.getColumnNameLowerCamel())).append(LINE_SEP);
-            sb.append("   }").append(LINE_SEP);
+            //写入set get方法
+            javaClassService.addGET_SET(sb, item.getColumnType4Java(), item.getColumnNameLowerCamel());
         }
-        sb.append("} ").append(LINE_SEP);
-
+        //类结束
+        javaClassService.addClass1(sb);
         return sb;
     }
 
@@ -65,7 +46,10 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
         String t = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisJavaTemplate";
         String str = fileUtil.readStrFrom(t);
         str = str.replaceAll("@@package_name@@", javaFile.getPackageName());
-        str = str.replaceAll("@@class_name@@", javaFile.getJavaTypeName());
+        str = str.replaceAll("@@model_comment@@", javaFile.getModelComment());
+        str = str.replaceAll("@@class_name@@", javaFile.getDtoClassName());
+        str = str.replaceAll("@@mybatis_java_class_name@@", javaFile.getMybatisJavaClassName());
+        str = str.replaceAll("@@full_class_name@@", javaFile.getFullClassName());
         str = str.replaceAll("@@dto_name@@", JavaAutoCodeUtil.firstCharLower(javaFile.getJavaTypeName()));
         return str;
     }
@@ -76,7 +60,7 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
         FileUtil fileUtil = new FileUtil();
         String t = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisXmlTemplate";
         String str = fileUtil.readStrFrom(t);
-        str = str.replaceAll("@@namespace@@", javaFile.getPackageName() + ".dao." + javaFile.getJavaTypeName());
+        str = str.replaceAll("@@namespace@@", javaFile.getFullJavaClassDaoName());
         str = str.replaceAll("@@class_name@@", javaFile.getJavaTypeName());
         str = str.replaceAll("@@resultMap@@", getResultMap(javaFile));
         str = str.replaceAll("@@insert_sql@@", getInsertSql(javaFile));
@@ -86,7 +70,9 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
     private String getResultMap(JavaFile javaFile) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("<resultMap id=\"" + javaFile.getJavaTypeName() + "ResultMap\" >").append(LINE_SEP);
+        sb.append("<resultMap id=\"" + javaFile.getJavaTypeName() + "ResultMap\" ");
+        sb.append("type = ").append("\"").append(javaFile.getFullClassName()).append("\"");
+        sb.append(">").append(LINE_SEP);
         String resultMap = "<result column=\"%s\" property=\"%s\" />";
         for (DDLColumn ddlColumn : javaFile.getAttributeList()) {
             sb.append("    ");
@@ -100,7 +86,6 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
 
     private String getInsertSql(JavaFile javaFile) {
 
-        String dtoName = javaFile.getJavaTypeName();
         String tableName = "#{tblName}";
         StringBuilder sb = new StringBuilder();
         sb.append("insert into `" + tableName + "`(");

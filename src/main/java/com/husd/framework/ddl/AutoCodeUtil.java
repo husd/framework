@@ -5,6 +5,9 @@ import com.google.common.base.CaseFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public class AutoCodeUtil {
 
     public static Map<String, String> col2JavaTypeMap = new HashMap<>();

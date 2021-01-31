@@ -5,6 +5,7 @@ import com.husd.framework.code.DDLColumn;
 /**
  * 生成Java代码的
  */
+@Deprecated
 public class MybatisJavaAutoUtil {
 
     public static void createModel(DDL ddl) {

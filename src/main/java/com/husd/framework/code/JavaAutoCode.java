@@ -6,7 +6,7 @@ package com.husd.framework.code;
 public interface JavaAutoCode {
 
     /**
-     * 生成实体类
+     * 生成实体类 model 这个是代码生成
      *
      * @param javaFile
      * @return
