@@ -12,6 +12,11 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
 
     private static final String LINE_SEP = System.getProperty("line.separator");
 
+    private final String TEMPLATE_MYBATIS_JAVA_INTERFACE = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisJavaTemplate";
+
+    private final String TEMPLATE_MYBATIS_XML = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisXmlTemplate";
+
+
     @Override
     public StringBuilder generateDto(JavaFile javaFile) {
 
@@ -43,8 +48,7 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
     @Override
     public String generateMybatisJava(JavaFile javaFile) {
         FileUtil fileUtil = new FileUtil();
-        String t = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisJavaTemplate";
-        String str = fileUtil.readStrFrom(t);
+        String str = fileUtil.readStrFrom(TEMPLATE_MYBATIS_JAVA_INTERFACE);
         str = str.replaceAll("@@package_name@@", javaFile.getPackageName());
         str = str.replaceAll("@@model_comment@@", javaFile.getModelComment());
         str = str.replaceAll("@@class_name@@", javaFile.getDtoClassName());
@@ -58,8 +62,7 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
     public String generateMybatisXml(JavaFile javaFile) {
 
         FileUtil fileUtil = new FileUtil();
-        String t = "/Users/hushengdong/hushengdong/github-source/framework/src/main/resources/template/mybatisXmlTemplate";
-        String str = fileUtil.readStrFrom(t);
+        String str = fileUtil.readStrFrom(TEMPLATE_MYBATIS_XML);
         str = str.replaceAll("@@namespace@@", javaFile.getFullJavaClassDaoName());
         str = str.replaceAll("@@class_name@@", javaFile.getJavaTypeName());
         str = str.replaceAll("@@resultMap@@", getResultMap(javaFile));
