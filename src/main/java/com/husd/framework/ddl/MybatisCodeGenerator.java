@@ -20,6 +20,8 @@ import java.util.List;
  */
 public class MybatisCodeGenerator {
 
+    private static final boolean WRITE_FILE = false;
+
     private static final String DTO_PACKAGE_NAME = "cn.com.gome.scot.price.tag.model";
     private static final String DAO_PACKAGE_NAME = "cn.com.gome.scot.price.tag.dao";
 
@@ -92,14 +94,26 @@ public class MybatisCodeGenerator {
 
         javaFile.setPackageName(DTO_PACKAGE_NAME);
         String content = javaAutoCode.generateDto(javaFile).toString();
-        FileUtil.write2File(content, DTO_PATH + javaFile.getModelFileName());
+        if (WRITE_FILE) {
+            FileUtil.write2File(content, DTO_PATH + javaFile.getModelFileName());
+        }
+        System.out.println("--------------Java dto---------------");
+        System.out.println(content);
 
         javaFile.setPackageName(DAO_PACKAGE_NAME);
         String s2 = javaAutoCode.generateMybatisJava(javaFile);
-        FileUtil.write2File(s2, DAO_PATH + javaFile.getMybatisJavaName());
+        if (WRITE_FILE) {
+            FileUtil.write2File(s2, DAO_PATH + javaFile.getMybatisJavaName());
+        }
+        System.out.println("--------------Java interface---------------");
+        System.out.println(s2);
 
         String s3 = javaAutoCode.generateMybatisXml(javaFile);
-        FileUtil.write2File(s3, DAO_XML_PATH + javaFile.getMybatisXmlName());
+        if (WRITE_FILE) {
+            FileUtil.write2File(s3, DAO_XML_PATH + javaFile.getMybatisXmlName());
+        }
+        System.out.println("--------------xml---------------");
+        System.out.println(s3);
     }
 
     private String readDDLFromFile(String path) throws IOException {

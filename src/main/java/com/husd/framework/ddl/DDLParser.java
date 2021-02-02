@@ -128,7 +128,7 @@ public class DDLParser {
                     ddlColumn.setColumnType(s);
                     break;
                 case NULL:
-                    if (pre != TokenType.COLUMN_TYPE) {
+                    if (pre != TokenType.COLUMN_TYPE && pre != TokenType.DEFAULT) {
                         err(err, s);
                     }
                     break;
