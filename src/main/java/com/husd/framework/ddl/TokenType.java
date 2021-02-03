@@ -25,6 +25,7 @@ public enum TokenType {
     DEFAULT(1, "default"),
     DEFAULT_VAL(1, ""),
     COMMENT(1, "comment"),
+    TABLE_COMMENT(1, "comment="),
     COMMENT_VAL(1, ""),
     COMMA(1, ","), //逗号
     PRIMARY_KEY(2, "primary key"),
@@ -86,12 +87,20 @@ public enum TokenType {
             if (col_type(str)) {
                 return COLUMN_TYPE;
             }
+            if (table_comment(str)) {
+                return TABLE_COMMENT;
+            }
         }
         if (str.length() > 0) {
             //不确定是什么，可能是表名，也可能是列名。
             return VAR;
         }
         return INIT;
+    }
+
+    private static boolean table_comment(String str) {
+
+        return str.startsWith("comment=");
     }
 
     private static boolean col_type(String str) {

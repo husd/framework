@@ -94,7 +94,7 @@ public class MybatisCodeGenerator {
 
         javaFile.setPackageName(DTO_PACKAGE_NAME);
         String content = javaAutoCode.generateDto(javaFile).toString();
-        if (WRITE_FILE) {
+        if (true) {
             FileUtil.write2File(content, DTO_PATH + javaFile.getModelFileName());
         }
         System.out.println("--------------Java dto---------------");
@@ -102,14 +102,14 @@ public class MybatisCodeGenerator {
 
         javaFile.setPackageName(DAO_PACKAGE_NAME);
         String s2 = javaAutoCode.generateMybatisJava(javaFile);
-        if (WRITE_FILE) {
+        if (false) {
             FileUtil.write2File(s2, DAO_PATH + javaFile.getMybatisJavaName());
         }
         System.out.println("--------------Java interface---------------");
         System.out.println(s2);
 
         String s3 = javaAutoCode.generateMybatisXml(javaFile);
-        if (WRITE_FILE) {
+        if (true) {
             FileUtil.write2File(s3, DAO_XML_PATH + javaFile.getMybatisXmlName());
         }
         System.out.println("--------------xml---------------");
@@ -124,6 +124,10 @@ public class MybatisCodeGenerator {
         List<String> lines = Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
         StringBuilder sb = new StringBuilder();
         for (String s : lines) {
+            s = s.trim();
+            if (s.startsWith("#")) {
+                continue;
+            }
             //要把逗号拆出来
             if (s.endsWith(",") || s.endsWith("，")) {
                 sb.append(s.toLowerCase().substring(0, s.length() - 1));

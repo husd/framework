@@ -160,6 +160,13 @@ public class DDLParser {
                         if (pre != TokenType.COMMENT) {
                             err(err, s);
                         }
+                        ddl.setTableComment(s);
+                    }
+                    break;
+                case TABLE_COMMENT:
+                    if (keyStep == KeyStep.table_opt) {
+                        int inx2 = s.indexOf("=");
+                        ddl.setTableComment(s.substring(inx2 + 1));
                     }
                     break;
                 case COMMA:
