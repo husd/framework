@@ -30,7 +30,7 @@ public class MybatisCodeGenerator {
     private static final String DAO_XML_PATH = "/Users/hushengdong/hushengdong/git-price-tag/price-tag/price-tag-dao/src/main/java/cn/com/gome/scot/price/tag/dao/impl/";
     private static final String DDL_SOURCE_FILE = "/Users/hushengdong/hushengdong/github-source/framework/src/main/java/com/husd/framework/ddl/src_ddl.sql";
 
-    private static final String[] blacklist = {"price_shop_change"};
+    private static final String[] blacklist = {""};
 
     public static void main(String[] args) {
         try {
@@ -102,7 +102,7 @@ public class MybatisCodeGenerator {
 
         javaFile.setPackageName(DAO_PACKAGE_NAME);
         String s2 = javaAutoCode.generateMybatisJava(javaFile);
-        if (false) {
+        if (true) {
             FileUtil.write2File(s2, DAO_PATH + javaFile.getMybatisJavaName());
         }
         System.out.println("--------------Java interface---------------");

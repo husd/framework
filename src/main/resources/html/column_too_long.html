@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style type="text/css">
+
+.mytable {
+    table-layout: fixed;
+    width: 98% border:0px;
+    margin: 0px;
+}
+
+.mytable tr td {
+    text-overflow: ellipsis; /* for IE */
+    -moz-text-overflow: ellipsis; /* for Firefox,mozilla */
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid;
+    text-align: left
+}
+
+</style>
+
+<table class="table table-striped table-bordered mytable"
+       style="font-size:12px;margin-bottom:0px;table-layout: fixed;text-overflow:ellipsis;" id="cgdTable"></table>
+</body>
+</html>

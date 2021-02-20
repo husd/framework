@@ -89,7 +89,7 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
 
     private String getInsertSql(JavaFile javaFile) {
 
-        String tableName = "#{tblName}";
+        String tableName = "#{tblName} ";
         StringBuilder sb = new StringBuilder();
         sb.append("insert into `" + tableName + "`(");
         sb.append(LINE_SEP);
@@ -104,10 +104,12 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
                 sb.append("`" + ddlColumn.getColumnName() + "`,");
             } else {
                 sb.append("`" + ddlColumn.getColumnName() + "`");
+                sb.append(LINE_SEP);
+                sb.append("    )");
             }
             sb.append(LINE_SEP);
         }
-        sb.append("values (");
+        sb.append("    values (");
         sb.append(LINE_SEP);
         String columnVal = "#{item.%s}";
         for (int i = 0; i < columnList.size(); i++) {
@@ -123,8 +125,7 @@ public class JavaAutoCodeImpl implements JavaAutoCode {
             }
             sb.append(LINE_SEP);
         }
-        sb.append(")");
-        sb.append(LINE_SEP);
+        sb.append("    )");
         return sb.toString();
     }
 
