@@ -22,12 +22,12 @@ public class MybatisCodeGenerator {
 
     private static final boolean WRITE_FILE = false;
 
-    private static final String DTO_PACKAGE_NAME = "cn.com.gome.scot.price.tag.model";
-    private static final String DAO_PACKAGE_NAME = "cn.com.gome.scot.price.tag.dao";
+    private static final String DTO_PACKAGE_NAME = "cn.com.xxx.dto";
+    private static final String DAO_PACKAGE_NAME = "cn.com.xxx.dao";
 
-    private static final String DTO_PATH = "/Users/hushengdong/hushengdong/git-price-tag/price-tag/price-tag-model/src/main/java/cn/com/gome/scot/price/tag/model/";
-    private static final String DAO_PATH = "/Users/hushengdong/hushengdong/git-price-tag/price-tag/price-tag-dao/src/main/java/cn/com/gome/scot/price/tag/dao/";
-    private static final String DAO_XML_PATH = "/Users/hushengdong/hushengdong/git-price-tag/price-tag/price-tag-dao/src/main/java/cn/com/gome/scot/price/tag/dao/impl/";
+    private static final String DTO_PATH = "/Users/hushengdong/hushengdong/xxx/xxx/dto/";
+    private static final String DAO_PATH = "/Users/hushengdong/hushengdong/xxx/xxx/dao/";
+    private static final String DAO_XML_PATH = "/Users/hushengdong/hushengdong/xxx/xxx/dao/impl/";
     private static final String DDL_SOURCE_FILE = "/Users/hushengdong/hushengdong/github-source/framework/src/main/java/com/husd/framework/ddl/src_ddl.sql";
 
     private static final String[] blacklist = {""};
